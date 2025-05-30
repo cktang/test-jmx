@@ -1,0 +1,54 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /
+
+spring:
+  application:
+    name: jmx-spring-bridge
+  
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+    default-property-inclusion: non_null
+
+# JMX configuration
+jmx:
+  server:
+    url: service:jmx:rmi:///jndi/rmi://localhost:9999/jmxrmi
+  mbean:
+    name: com.example.jmx:type=Test
+
+# CORS configuration
+app:
+  cors:
+    allowed-origins: http://localhost:4200,http://localhost:3000
+
+# Logging configuration
+logging:
+  level:
+    root: INFO
+    com.example.bridge: DEBUG
+    org.springframework.security: DEBUG
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
+
+# Swagger/OpenAPI configuration
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    enabled: true
+    operations-sorter: method
+    tags-sorter: alpha
+
+# Management endpoints
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: when-authorized 
